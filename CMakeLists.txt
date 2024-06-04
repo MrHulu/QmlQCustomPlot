@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.14)
 
 project(QmlQCusomPlotDemo LANGUAGES CXX)
 
-find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick REQUIRED)
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick REQUIRED)
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Gui Quick REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Gui Quick REQUIRED)
 
 
 add_executable(QmlQCusomPlotDemo)
@@ -18,6 +18,7 @@ set_target_properties(QmlQCusomPlotDemo PROPERTIES
     CXX_STANDARD_REQUIRED ON
     INCLUDE_CURRENT_DIR ON
     OUTPUT_NAME ${PROJECT_NAME})
+target_include_directories(QmlQCusomPlotDemo PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(QmlQCusomPlotDemo PRIVATE Qt5::Core Qt5::Quick 
     QmlQCusomPlot # add QmlQCusomPlot 
 )
