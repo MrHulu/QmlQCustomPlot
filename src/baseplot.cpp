@@ -52,7 +52,8 @@ void BasePlot::set_backgroundColor(const QColor &value)
     // m_backgroundColor = m_customPlot->background().toImage().pixelColor(0, 0);
     if(m_backgroundColor == value) return;
     m_backgroundColor = value;
-    m_customPlot->axisRect()->setBackground(QBrush(m_backgroundColor));
+    m_customPlot->setBackground(QBrush(m_backgroundColor));
+    // m_customPlot->axisRect()->setBackground(QBrush(m_backgroundColor));
     emit backgroundColorChanged(m_backgroundColor);
     m_customPlot->replot();
 }
@@ -66,35 +67,36 @@ QVariantMap BasePlot::graphs() const
     return map;
 }
 
-Q_INVOKABLE void BasePlot::addGraph(const QString &name)
+Q_INVOKABLE void BasePlot::addGraph(const QString &key)
 {
-    if(m_graphs.contains(name)) return;
+    if(m_graphs.contains(key)) return;
 
     auto g = m_customPlot->addGraph();
     if(g == nullptr) return;
-    g->setName(name);
+    g->setName(key);
     auto graph = new Graph(g, m_customPlot, this);
-    m_graphs.insert(name, graph);
-    connect(graph, &Graph::nameChanged, this, [this, name]{
-        auto graph = m_graphs.take(name);
-        m_graphs.insert(graph->name(), graph);
-    }, Qt::UniqueConnection);
+    m_graphs.insert(key, graph);
     emit graphsChanged();
 }
 
-Q_INVOKABLE void BasePlot::removeGraph(const QString &name)
+Q_INVOKABLE void BasePlot::removeGraph(const QString &key)
 {
-    if(m_graphs.contains(name)) {
-        auto graph = m_graphs.take(name);
+    if(m_graphs.contains(key)) {
+        auto graph = m_graphs.take(key);
         delete graph;
         emit graphsChanged();
     }
 }
 
-Graph *BasePlot::getGraph(const QString &name) const
+Q_INVOKABLE void BasePlot::rescaleAxes(bool onlyVisiblePlottables)
 {
-    if(m_graphs.contains(name)) {
-        return m_graphs.value(name);
+    m_customPlot->rescaleAxes(onlyVisiblePlottables);
+}
+
+Graph *BasePlot::getGraph(const QString &key) const
+{
+    if(m_graphs.contains(key)) {
+        return m_graphs.value(key);
     }
     return nullptr;
 }

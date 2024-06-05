@@ -12,7 +12,7 @@ TimePlot::TimePlot(QQuickItem *parent)
     : BasePlot(parent)
     , m_timer(new QTimer(this))
 {
-    // x()->setTickerType(Axis::Time);
+    x()->setTickerType(Axis::Time);
     connect(m_timer, &QTimer::timeout, this, &TimePlot::onTimeOut);
     m_timer->start(1);
     startTimer(25);

@@ -29,13 +29,14 @@ public:
     void set_backgroundColor(const QColor &value);
     QVariantMap graphs() const;
     Q_SIGNAL void graphsChanged();
-    Q_INVOKABLE void addGraph(const QString &name);
-    Q_INVOKABLE void removeGraph(const QString &name);
+    Q_INVOKABLE void addGraph(const QString &key);
+    Q_INVOKABLE void removeGraph(const QString &key);
+    Q_INVOKABLE void rescaleAxes(bool onlyVisiblePlottables=false);
 
     void paint(QPainter *painter);
     QCustomPlot *customPlot() const { return m_customPlot; }
     const QMap<QString, Graph *> &graphsMap() const { return m_graphs; }
-    Graph* getGraph(const QString &name) const;
+    Graph* getGraph(const QString &key) const;
 
 protected:
     virtual void onChartViewReplot() { update(); }

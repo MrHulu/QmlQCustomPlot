@@ -20,7 +20,7 @@ set_target_properties(QmlQCusomPlotDemo PROPERTIES
     OUTPUT_NAME ${PROJECT_NAME})
 target_include_directories(QmlQCusomPlotDemo PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_link_libraries(QmlQCusomPlotDemo PRIVATE Qt5::Core Qt5::Quick 
-    QmlQCusomPlot # add QmlQCusomPlot 
+    QmlQCustomPlot # add QmlQCustomPlot 
 )
 
 

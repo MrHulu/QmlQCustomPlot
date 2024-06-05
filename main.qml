@@ -8,7 +8,7 @@ ApplicationWindow {
     visible: true
     width: 640
     height: 480
-    title: qsTr("Hello QCustomPlot in QML")
+    title: qsTr("QCustomPlot in QML")
 
     SwipeView {
         id: swipeView
@@ -29,29 +29,27 @@ ApplicationWindow {
                 y.ticker.ticks: false
                 y.ticker.subTicks: false
                 y.ticker.baseColor: "transparent"
-                y.grid.lineColor: "#50006EFF"
-                x.ticker.baseColor: "#0000FF"
+                y.grid.lineColor: "mediumaquamarine"
+                x.ticker.baseColor: "midnightblue"
                 x.ticker.baseWidth: 2
                 x.grid.lineColor: "transparent"
-                backgroundColor: "#F2F4F7"
+                backgroundColor: "mistyrose"
                 Component.onCompleted: {
                     y.setRange(0, 100)
-                    x.ticker.ticks = false
                     addGraph("1")
+                    graphs["1"].graphColor = "slategrey"
                 }
             }
             Timer {
                 running: true
                 repeat: true 
-                interval: 3
+                interval: 20
                 property int data: 60
-                property int ok: 0
                 onTriggered: {
                     data = data - 1
                     if(data == 20) {
                         data = 60 
                     } 
-                    
                     timePlot.addCurrentTimeValue("1", data)                    
                 }
             }
@@ -59,14 +57,52 @@ ApplicationWindow {
         Page {
             BasePlot {
                 anchors.fill: parent
-                backgroundColor: "#F2F4F7"
+                backgroundColor: "gainsboro"
+                x.ticker.ticks: false
+                x.ticker.subTicks: false
+                y.ticker.ticks: false
+                y.ticker.subTicks: false
+                Component.onCompleted: {
+                    x.label = "x"
+                    y.label = "y'"
+                    addGraph("1")
+                    graphs["1"].graphColor = "lightcoral"
+                    graphs["1"].graphWidth = 2
+                    let xData = []
+                    let yData = []
+                    for (var i = 0; i <= 100; ++i) {
+                        xData.push(i - 50);
+                        yData.push(xData[i] * xData[i])
+                    }
+                    graphs["1"].setData(xData, yData)
+                    graphs["1"].name = "y = x^2"
+                    addGraph("2")
+                    graphs["2"].graphColor = "lightseagreen"
+                    graphs["2"].graphWidth = 3
+                    xData = []
+                    yData = []
+                    for (var i = 0; i <= 100; ++i) {
+                        xData.push(i - 50);
+                        yData.push(xData[i] * xData[i] * 2  + 100)
+                    }
+                    graphs["2"].setData(xData, yData)
+                    graphs["2"].name = "y = 2x^2 + 100"
+                    rescaleAxes(true)
+                }
             }
-            // }
-            // Label {
-            //     text: qsTr("This is implementation of http://www.qcustomplot.com/index.php/support/forum/172\n" +
-            //                "Adding random data on 500 ms tick to plot")
-            //     anchors.centerIn: parent
-            // }
+        }
+        Page {
+            Label {
+                id: label
+                readonly property var url: "https://github.com/MrHulu/QmlQCustomPlot" 
+                text: qsTr("This is implementation of %1\n".arg(label.url))
+                anchors.centerIn: parent
+                MouseArea {
+                    anchors.fill: parent
+                    cursorShape: Qt.PointingHandCursor
+                    onClicked: Qt.openUrlExternally(label.url) 
+                }
+            }
         }
     }
 
@@ -74,7 +110,10 @@ ApplicationWindow {
         id: tabBar
         currentIndex: swipeView.currentIndex
         TabButton {
-            text: qsTr("Plot")
+            text: qsTr("TimePlot")
+        }
+        TabButton {
+            text: qsTr("BasePlot")
         }
         TabButton {
             text: qsTr("Info")
