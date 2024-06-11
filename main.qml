@@ -21,21 +21,21 @@ ApplicationWindow {
                 id: timePlot
                 anchors.fill: parent
                 plotTimeRangeInMilliseconds: 10         
-                x.visible: true
-                y.visible: true
-                x1.visible: false
-                y1.visible: false
-                y.ticker.tickCount: 6
-                y.ticker.ticks: false
-                y.ticker.subTicks: false
-                y.ticker.baseColor: "transparent"
-                y.grid.lineColor: "mediumaquamarine"
-                x.ticker.baseColor: "midnightblue"
-                x.ticker.baseWidth: 2
-                x.grid.lineColor: "transparent"
+                xAxis.visible: true
+                yAxis.visible: true
+                x1Axis.visible: false
+                y1Axis.visible: false
+                yAxis.ticker.tickCount: 6
+                yAxis.ticker.ticks: false
+                yAxis.ticker.subTicks: false
+                yAxis.ticker.baseColor: "transparent"
+                yAxis.grid.lineColor: "mediumaquamarine"
+                xAxis.ticker.baseColor: "midnightblue"
+                xAxis.ticker.baseWidth: 2
+                xAxis.grid.lineColor: "transparent"
                 backgroundColor: "mistyrose"
                 Component.onCompleted: {
-                    y.setRange(0, 100)
+                    yAxis.setRange(0, 100)
                     addGraph("1")
                     graphs["1"].graphColor = "slategrey"
                 }
@@ -58,13 +58,13 @@ ApplicationWindow {
             BasePlot {
                 anchors.fill: parent
                 backgroundColor: "gainsboro"
-                x.ticker.ticks: false
-                x.ticker.subTicks: false
-                y.ticker.ticks: false
-                y.ticker.subTicks: false
+                xAxis.ticker.ticks: false
+                xAxis.ticker.subTicks: false
+                yAxis.ticker.ticks: false
+                yAxis.ticker.subTicks: false
                 Component.onCompleted: {
-                    x.label = "x"
-                    y.label = "y'"
+                    xAxis.label = "xAxis"
+                    yAxis.label = "yAxis'"
                     addGraph("1")
                     graphs["1"].graphColor = "lightcoral"
                     graphs["1"].graphWidth = 2
@@ -75,7 +75,7 @@ ApplicationWindow {
                         yData.push(xData[i] * xData[i])
                     }
                     graphs["1"].setData(xData, yData)
-                    graphs["1"].name = "y = x^2"
+                    graphs["1"].name = "yAxis = xAxis^2"
                     addGraph("2")
                     graphs["2"].graphColor = "lightseagreen"
                     graphs["2"].graphWidth = 3
@@ -86,7 +86,7 @@ ApplicationWindow {
                         yData.push(xData[i] * xData[i] * 2  + 100)
                     }
                     graphs["2"].setData(xData, yData)
-                    graphs["2"].name = "y = 2x^2 + 100"
+                    graphs["2"].name = "yAxis = 2x^2 + 100"
                     rescaleAxes(true)
                 }
             }

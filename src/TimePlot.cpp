@@ -12,9 +12,9 @@ TimePlot::TimePlot(QQuickItem *parent)
     : BasePlot(parent)
     , m_timer(new QTimer(this))
 {
-    x()->setTickerType(Axis::Time);
+    xAxis()->setTickerType(Axis::Time);
     connect(m_timer, &QTimer::timeout, this, &TimePlot::onTimeOut);
-    m_timer->start(1);
+    m_timer->start(5);
     startTimer(25);
     m_plotTimeRangeInMilliseconds = 60;
 }
@@ -33,10 +33,10 @@ void TimePlot::set_plotTimeRangeInMilliseconds(int value) noexcept
 
 Q_INVOKABLE void TimePlot::setTimeFormat(const QString &format) noexcept
 {
-    if(x()) {
+    if(xAxis()) {
         QSharedPointer<QCPAxisTickerTime> timeTicker(new QCPAxisTickerTime);
         timeTicker->setTimeFormat(format);
-        x()->setTicker(timeTicker);
+        xAxis()->setTicker(timeTicker);
     }
 }
 
@@ -74,8 +74,8 @@ void TimePlot::onTimeOut() noexcept
     //     });
     //     m_lastAddedTime = m_currentTimeKey;
     // }
-    if(x())
-        x()->setRange(m_currentTimeKey - m_plotTimeRangeInMilliseconds, m_currentTimeKey);
+    if(xAxis())
+        xAxis()->setRange(m_currentTimeKey - m_plotTimeRangeInMilliseconds, m_currentTimeKey);
     // QCP::MarginSide s = &static_cast<QCP::MarginSide*>((customPlot()->axisRect()->autoMargins()));
     // qDebug() << s;
 }

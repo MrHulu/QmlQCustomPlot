@@ -17,10 +17,10 @@ class BasePlot : public QQuickPaintedItem
 {
     Q_OBJECT
     QML_READ_WRITE_NOTIFY_PROPERTY(QColor, backgroundColor)
-    QML_READ_NOTIFY_PROPERTY(QmlQCustomPlot::Axis *, x)
-    QML_READ_NOTIFY_PROPERTY(QmlQCustomPlot::Axis *, x1)
-    QML_READ_NOTIFY_PROPERTY(QmlQCustomPlot::Axis *, y)
-    QML_READ_NOTIFY_PROPERTY(QmlQCustomPlot::Axis *, y1)
+    QML_READ_NOTIFY_PROPERTY(QmlQCustomPlot::Axis *, xAxis)
+    QML_READ_NOTIFY_PROPERTY(QmlQCustomPlot::Axis *, x1Axis)
+    QML_READ_NOTIFY_PROPERTY(QmlQCustomPlot::Axis *, yAxis)
+    QML_READ_NOTIFY_PROPERTY(QmlQCustomPlot::Axis *, y1Axis)
     Q_PROPERTY(QVariantMap graphs READ graphs NOTIFY graphsChanged)
 public:
     BasePlot(QQuickItem *parent = nullptr);

@@ -20,24 +20,24 @@ BasePlot::BasePlot(QQuickItem *parent)
     connect(this, &QQuickPaintedItem::heightChanged, this, &BasePlot::onChartViewSizeChanged);   
     connect(m_customPlot, &QCustomPlot::afterReplot, this, &BasePlot::onChartViewReplot, Qt::UniqueConnection);
     try {
-        m_x = new Axis(m_customPlot->xAxis, m_customPlot, this);
-        m_x1 = new Axis(m_customPlot->xAxis2, m_customPlot, this);
-        m_y = new Axis(m_customPlot->yAxis, m_customPlot, this);
-        m_y1 = new Axis(m_customPlot->yAxis2, m_customPlot, this);
-        connect(m_x, &Axis::destroyed, this, [this]{ m_x = nullptr; Q_EMIT xChanged(nullptr); });
-        connect(m_x1, &Axis::destroyed, this, [this]{ m_x1 = nullptr; Q_EMIT x1Changed(nullptr);});
-        connect(m_y, &Axis::destroyed, this, [this]{ m_y = nullptr; Q_EMIT yChanged(nullptr); });
-        connect(m_y1, &Axis::destroyed, this, [this]{ m_y1 = nullptr; Q_EMIT y1Changed(nullptr);});
+        m_xAxis = new Axis(m_customPlot->xAxis, m_customPlot, this);
+        m_x1Axis = new Axis(m_customPlot->xAxis2, m_customPlot, this);
+        m_yAxis = new Axis(m_customPlot->yAxis, m_customPlot, this);
+        m_y1Axis = new Axis(m_customPlot->yAxis2, m_customPlot, this);
+        connect(m_xAxis, &Axis::destroyed, this, [this]{ m_xAxis = nullptr; Q_EMIT xAxisChanged(nullptr); });
+        connect(m_x1Axis, &Axis::destroyed, this, [this]{ m_x1Axis = nullptr; Q_EMIT x1AxisChanged(nullptr);});
+        connect(m_yAxis, &Axis::destroyed, this, [this]{ m_yAxis = nullptr; Q_EMIT yAxisChanged(nullptr); });
+        connect(m_y1Axis, &Axis::destroyed, this, [this]{ m_y1Axis = nullptr; Q_EMIT y1AxisChanged(nullptr);});
         connect(m_customPlot->xAxis, SIGNAL(rangeChanged(QCPRange)), m_customPlot->xAxis2, SLOT(setRange(QCPRange)));
         connect(m_customPlot->yAxis, SIGNAL(rangeChanged(QCPRange)), m_customPlot->yAxis2, SLOT(setRange(QCPRange)));
    
     }
     catch(const std::exception &e) {
         qCritical() << e.what();
-        m_x = nullptr;
-        m_x1 = nullptr;
-        m_y = nullptr;
-        m_y1 = nullptr;
+        m_xAxis = nullptr;
+        m_x1Axis = nullptr;
+        m_yAxis = nullptr;
+        m_y1Axis = nullptr;
     }
     update();
 }
